@@ -1,0 +1,707 @@
+#import needed libraries  
+import turtle
+from turtle import *
+import random
+import time
+
+#Define constants
+CAR_SPEED = 0
+MAX_SPEED = 8
+MAX_SPEED_BRAKING = -7
+
+RIGHT_EDGE = 600
+LEFT_EDGE = -600
+BOTTOM_EDGE = -400
+TOP_EDGE = 400
+LAPS = 5
+
+#Lists
+lapTimes = []
+
+#screen setup
+screen = Screen()
+screen.title("Asphalt Assault")
+screen.bgcolor("grey")
+screen.tracer(0)
+
+#background
+def bg_color(my_turtle, side_length):
+  my_turtle.pendown()
+  my_turtle.color("green")
+  my_turtle.setheading(0)
+  my_turtle.forward(side_length+255)
+  my_turtle.right(90)
+  my_turtle.pensize(120)
+  my_turtle.forward(side_length-290)
+  my_turtle.right(90)
+  my_turtle.forward(side_length+120)
+  my_turtle.right(90)
+  my_turtle.forward(side_length-350)
+  my_turtle.penup()
+  my_turtle.goto(55,70)
+  my_turtle.pendown()
+  my_turtle.setheading(0)
+  my_turtle.forward(side_length-550)
+  my_turtle.right(90)
+  my_turtle.forward(80)
+  my_turtle.right(90)
+  my_turtle.forward(side_length-550)
+  my_turtle.left(90)
+  my_turtle.forward(60)
+  my_turtle.left(90)
+  my_turtle.forward(side_length-550)
+  my_turtle.right(90)
+  my_turtle.forward(50)
+  my_turtle.right(90)
+  my_turtle.setheading(180)
+  my_turtle.pensize(20)
+  my_turtle.forward(side_length-500)
+  my_turtle.right(90)
+  my_turtle.forward(side_length-960)
+  my_turtle.right(90)
+  my_turtle.forward(side_length-1150)
+  my_turtle.penup()
+  return
+
+#Functions
+def OutterTrack(my_turtle, side_length): #side_length has to be 1200 for coordinates (-600, -400)
+  global pColor
+  my_turtle.pendown()
+  my_turtle.setheading(0)
+  my_turtle.forward(side_length)
+  my_turtle.left(90)
+  my_turtle.forward(float(side_length/4.5))
+  my_turtle.left(90)
+  my_turtle.forward(side_length/2)
+  my_turtle.right(90)
+  my_turtle.forward(float(side_length/4.5))
+  my_turtle.right(90)
+  my_turtle.forward(side_length/2)
+  my_turtle.left(90)
+  my_turtle.forward(float(side_length/4.5))
+  my_turtle.left(90)
+  my_turtle.forward(side_length)
+  my_turtle.left(90)
+  my_turtle.forward(float((side_length/4.5)*3))
+  my_turtle.penup()
+  return
+
+def InnerTrack(my_turtle, side_length, my_turtle2):
+  global pColor
+  my_turtle.pendown()
+  my_turtle.setheading(180)
+  my_turtle.forward(side_length - 50) #650
+  my_turtle.right(90)
+  my_turtle.forward(float(800/3*2))
+  my_turtle.right(90)
+  my_turtle.forward(side_length - 50)
+  my_turtle.ht()
+
+  my_turtle2.pendown()
+  my_turtle2.setheading(180)
+  for color in range(5):
+    if (pColor == 'red'):
+      pColor = 'white'
+      my_turtle2.pencolor(pColor)
+      my_turtle2.forward(10)
+    if (pColor == 'white'):
+      pColor = 'red'
+      my_turtle2.pencolor(pColor)
+      my_turtle2.forward(10)
+  my_turtle2.penup()
+
+  my_turtle2.forward(side_length - 200)
+  my_turtle2.pendown()
+  my_turtle2.setheading(180)
+  for color in range(5):
+    if (color >= 3):
+      my_turtle2.setheading(90)
+    if (pColor == 'red'):
+      pColor = 'white'
+      my_turtle2.pencolor(pColor)
+      my_turtle2.forward(10)
+    if (pColor == 'white'):
+      pColor = 'red'
+      my_turtle2.pencolor(pColor)
+      my_turtle2.forward(10)
+  my_turtle2.penup()
+
+  my_turtle2.forward(float(800/3*2) - 100)
+  my_turtle2.pendown()
+  for color in range(5):
+    if (color >= 3):
+      my_turtle2.setheading(0)
+    if (pColor == 'red'):
+      pColor = 'white'
+      my_turtle2.pencolor(pColor)
+      my_turtle2.forward(10)
+    if (pColor == 'white'):
+      pColor = 'red'
+      my_turtle2.pencolor(pColor)
+      my_turtle2.forward(10)
+  my_turtle2.penup()
+
+  my_turtle2.forward(side_length - 175)
+  my_turtle2.pendown()
+  for color in range(5):
+    if (color >= 3):
+      my_turtle2.setheading(0)
+    if (pColor == 'red'):
+      pColor = 'white'
+      my_turtle2.pencolor(pColor)
+      my_turtle2.forward(10)
+    if (pColor == 'white'):
+      pColor = 'red'
+      my_turtle2.pencolor(pColor)
+      my_turtle2.forward(10)
+  my_turtle2.penup()
+
+  my_turtle2.goto(600, -133)
+  my_turtle2.setheading(180)
+  my_turtle2.forward(540)
+  my_turtle2.pendown()
+  for color in range(5):
+    if (color >= 3):
+      my_turtle2.setheading(90)
+    if (pColor == 'red'):
+      pColor = 'white'
+      my_turtle2.pencolor(pColor)
+      my_turtle2.forward(10)
+    if (pColor == 'white'):
+      pColor = 'red'
+      my_turtle2.pencolor(pColor)
+      my_turtle2.forward(10)
+  my_turtle2.penup()
+
+  my_turtle2.forward(float(800/3) - 101)
+  my_turtle2.pendown()
+  for color in range(5):
+    if (color >= 3):
+      my_turtle2.setheading(0)
+    if (pColor == 'red'):
+      pColor = 'white'
+      my_turtle2.pencolor(pColor)
+      my_turtle2.forward(10)
+    if (pColor == 'white'):
+      pColor = 'red'
+      my_turtle2.pencolor(pColor)
+      my_turtle2.forward(10)
+  my_turtle2.penup()
+  my_turtle2.ht()
+  my_turtle.ht()
+  return
+
+def startFinishLine(my_turtle, side_length):
+  my_turtle.pendown()
+  my_turtle.forward(side_length)
+  my_turtle.penup()
+  return
+
+def pitLane(my_turtle, side_length_pit):
+  my_turtle.pendown()
+  my_turtle.forward(side_length_pit - 75)
+  my_turtle.pensize(2)
+  my_turtle.forward(75)
+  my_turtle.left(90)
+  my_turtle.forward(side_length_pit/6.32)
+  my_turtle.forward(side_length_pit2)
+  my_turtle.penup()
+  my_turtle.goto(-548,270)
+  my_turtle.ht()
+  my_turtle.setheading(90)
+  my_turtle.write("Pit Lane", move=False, align='center', font=('Times New Roman', 26, 'normal'))
+  return
+
+#Edges
+def hitWall(shape):
+  global CAR_SPEED
+  x = shape.xcor()
+  y = shape.ycor()
+
+  #check wall 1
+  if((x >= -250) and (x <= 385)) and ((y <= -261) and (y >= -271)):
+    shape.backward(CAR_SPEED)
+    CAR_SPEED = 0
+    return(True) #Done
+
+  #check wall 2
+  if((x <= -245) and (x >= -255)) and ((y >= -266) and (y <= 267)):
+    shape.backward(CAR_SPEED)
+    CAR_SPEED = 0
+    return(True) #Done
+
+  #check wall 3
+  if ((x >= -250) and (x <= 385)) and ((y >= 261) and (y <= 271)):
+    shape.backward(CAR_SPEED)
+    CAR_SPEED = 0
+    return(True) #Done
+
+  #check wall 4
+  if (x >= 0) and ((y >= 133) and (y <= 143)):
+    shape.backward(CAR_SPEED)
+    CAR_SPEED = 0
+    return(True) #Done
+
+  #check wall 5
+  if (x >= 0) and ((y <= 133) and (y >= -134)):
+    shape.backward(CAR_SPEED)
+    CAR_SPEED = 0
+    return(True) #Done
+
+  #check wall 6
+  if (x >= 0) and ((y >= -134) and (y <= -124)):
+    shape.backward(CAR_SPEED)
+    CAR_SPEED = 0
+    return(True) #Done
+
+  #check pit wall
+  if ((x <= -495) and (x >= -505)) and ((y >= -332) and (y <= 300)):
+    shape.backward(CAR_SPEED)
+    CAR_SPEED = 0
+    return(True) #Done
+
+def outerBarriers(shape):
+  global RIGHT_EDGE, LEFT_EDGE, BOTTOM_EDGE, TOP_EDGE, CAR_SPEED
+
+  x = shape.xcor()
+  y = shape.ycor()
+  currH = shape.heading()
+  hit = False
+
+  if (shape.xcor()>= RIGHT_EDGE):
+      if (shape.xcor()>= RIGHT_EDGE + 2):
+        shape.goto(x - 100, y)
+      else:
+        if (currH <= 15) or (currH >= 345):
+          shape.backward(CAR_SPEED)
+          CAR_SPEED = 0
+        else:
+          a = 180 - currH
+          shape.setheading(a)
+          shape.forward(5)
+      hit = True
+
+  if (shape.xcor()<= LEFT_EDGE):
+      if (shape.xcor()<= LEFT_EDGE - 2):
+        shape.goto(x + 100, y)
+      else:
+        if (currH >= 335) or (currH <= 25):
+          shape.backward(CAR_SPEED)
+          CAR_SPEED = 0
+        else:
+          a = 180 - currH
+          shape.setheading(a)
+          shape.forward(5)
+      hit = True
+
+  if (shape.ycor()<= BOTTOM_EDGE):
+      if (shape.ycor()<= BOTTOM_EDGE - 2):
+        shape.goto(x, y + 100)
+      else:
+        if (currH >= 245) or (currH <= 295):
+          shape.backward(CAR_SPEED)
+          CAR_SPEED = 0
+        else:
+          a = 360 - currH
+          shape.setheading(a)
+          shape.forward(5)
+      hit = True
+
+  if (shape.ycor()>= TOP_EDGE):
+      if (shape.ycor() >= TOP_EDGE + 2):
+          shape.goto(x, y - 100)
+      else:
+        if (currH >= 65) and (currH <= 115):
+          shape.backward(CAR_SPEED)
+          CAR_SPEED = 0
+        else:
+          a = 360 - currH
+          shape.setheading(a)
+          shape.forward(5)
+      hit = True
+
+  if (hit == True):
+      CAR_SPEED = float(CAR_SPEED/8)
+  return
+
+#Timer
+def lap_counter(time, laps):
+  global LEFT_EDGE, car, x
+  if (car.xcor() >= LEFT_EDGE):
+    time.clear()
+    x = x + 1
+    time.write(("Laps:", x, '/', laps), move = False, align = 'center', font=('Courier', 25, 'normal'))
+    return
+
+def timeKeeper(shape, shape2, shape3):
+  global k, start, lapTimes, yes, append, ln
+  x = shape.xcor()
+  y = shape.ycor()
+  if (start == True):
+    k = k + 3
+    if (k % 30 == 0):
+      shape2.clear()
+      shape2.write(round(k/200, 3), move = False, align = 'center', font=('Courier', 25, 'normal'))
+  if (x >= LEFT_EDGE) and (x <= LEFT_EDGE + 350):
+    if (y >= -110) and (y <= -100):
+      start = True
+      if (yes == True) and (append == False):
+        lapTimes.append([round(k/200, 3), "Lap", ln])
+        lapTimes.sort()
+        shape3.clear()
+        shape3.write(("Quickest Lap:", lapTimes[0]), move = False, align = 'center', font=('Courier', 15, 'normal'))
+        ln = ln + 1
+        append = True
+      k = 0
+    if (y <= -110):
+      yes = True
+      append = False
+  return        
+
+#Start Lights
+def allGreen (rlight1, rlight2, rlight3):
+    rlight1.color("dark green"),
+    rlight2.color("dark green"),
+    rlight3.color("dark green"),
+    screen.bgcolor("green")
+    rlight1.ht()
+    rlight2.ht()
+    rlight3.ht()
+    s_Light.clear()
+    return
+
+def draw_rect (my_turtle, side_length1, side_length2):
+    my_turtle.pendown()
+    for x in range(0,2):
+        my_turtle.forward(side_length1)
+        my_turtle.right(90)
+        my_turtle.forward(side_length2)
+        my_turtle.right(90)
+    my_turtle.penup()
+    return
+
+def startLights(light1, light2, light3):
+    time.sleep(1)
+    light1.shape("circle")
+    light1.position()
+    light1.sety(0)
+    light1.color("red")
+    light1.goto(-460,-140)
+    light1.showturtle()
+
+    time.sleep(1)
+    light2.shape("circle")
+    light2.position()
+    light2.sety(0)
+    light2.color("red")
+    light2.goto(-430,-140)
+    light2.showturtle()
+
+    time.sleep(1)
+    light3.shape("circle")
+    light3.position()
+    light3.sety(0)
+    light3.color("red")
+    light3.goto(-400,-140)
+    light3.showturtle()
+    return
+
+#Lap Counter
+def lap_writer():
+    global car, passed
+    if (car.xcor() <= -250):
+        if (car.ycor() >= -100) and (car.ycor() <= -75):
+            passed = True
+    if (passed == True):
+        if (car.xcor() <= -250):
+            if (car.ycor() <= -100) and (car.ycor() >= -110):
+                lap_counter(laper, LAPS)
+                passed = False
+    return
+
+def lap_counter(time, laps):
+  global playing, LEFT_EDGE, car, x, lap, LAPS, k, ln
+  if (car.xcor() >= LEFT_EDGE):
+    time.clear()
+    lap = lap + 1
+    if (lap > LAPS):
+      lapTimes.append([round(k/200, 3), "Lap", ln])
+      time.goto(0, 0)
+      lapTimes.sort()
+      writingFinal(time)
+    else:
+      time.write(("Laps:", lap, '/', laps), move = False, align = 'center', font=('Courier', 25, 'normal'))
+    return
+
+def writingFinal(shape):
+  global gt, cTime, bg_c
+  bg_c.goto(15, 15)
+  bg_c.pensize(2000)
+  bg_c.pencolor('white')
+  bg_c.pendown()
+  for t in range (4):
+    bg_c.forward(30)
+    bg_c.rt(90)
+  bg_c.ht()
+  shape.goto(0, gt + 100)
+  shape.write("Top Laps:",  move = False, align = 'center', font=('Courier', 35, 'normal'))
+  for laps in range (len(lapTimes)):
+    shape.goto(0, gt)
+    shape.write(lapTimes[laps],  move = False, align = 'center', font=('Courier', 25, 'normal'))
+    gt = gt - 100
+  for x in range(len(lapTimes)):
+    cTime = cTime + lapTimes[x][0]
+  cTime = cTime/len(lapTimes)
+  shape.goto(0, gt - 100)
+  shape.write(("Average Time:", round(cTime, 3)), move = False, align = 'center', font=('Courier', 35, 'normal'))
+  return
+
+#Pit Function
+def pitFunction(shape):
+  global MAX_SPEED, pitL, pit
+  x = shape.xcor()
+  y = shape.ycor()
+  if (x <= -500) and ((y <= 300) and (y >= -332)):
+    pit = True
+    MAX_SPEED = MAX_SPEED + 5
+  return
+
+#Car Movement
+def ballB():
+    global CAR_SPEED, MAX_SPEED_BRAKING
+    if CAR_SPEED <= MAX_SPEED_BRAKING:
+        CAR_SPEED = MAX_SPEED_BRAKING
+    else:
+        CAR_SPEED = CAR_SPEED - 0.5
+    return
+
+def ballF():
+    global CAR_SPEED, MAX_SPEED, screen
+    if CAR_SPEED >= MAX_SPEED:
+        CAR_SPEED = MAX_SPEED
+    else:
+        CAR_SPEED = CAR_SPEED + 0.5
+    return()
+
+def ballL():
+    if CAR_SPEED == 0:
+        car.left(1)
+    if CAR_SPEED <= 2:
+        car.left(3)
+    if CAR_SPEED <= 4:
+        car.left(5)
+    if CAR_SPEED <= 6:
+        car.left(8)
+    else:
+        car.left(10)
+    return()
+
+def ballR():
+    if CAR_SPEED == 0:
+        car.left(1)
+    if CAR_SPEED <= 2:
+        car.right(3)
+    if CAR_SPEED <= 4:
+        car.right(5)
+    if CAR_SPEED <= 6:
+        car.right(8)
+    else:
+        car.right(10)
+    return()
+
+onkey(ballF, "Up") or onkey(ballF, "w")
+onkey(ballB, "Down") or onkey(ballB, "s")
+onkey(ballL, "Left") or onkey(ballL, "a")
+onkey(ballR, "Right") or onkey(ballR, "d")
+listen()
+
+#End of Game
+def ending():
+    global LAPS, car, i_t, i_t2, o_t, o_t2, s_L, pitL, screen, timerK, bLap, screen
+    if (lap == LAPS + 1):
+        CAR_SPEED = 0
+        screen.tracer(0)
+        car.ht()
+        car.clear()
+        o_t.clear()
+        o_t.ht()
+        o_t2.clear()
+        o_t2.ht()
+        i_t.clear()
+        i_t.ht()
+        i_t2.clear()
+        i_t2.ht()
+        s_L.clear()
+        s_L.ht()
+        pitL.clear()
+        pitL.ht()
+        timerK.clear()
+        timerK.ht()
+        bLap.clear()
+        bLap.ht()
+    return()
+
+##Main Program##
+#Background
+bg_c = turtle.Turtle()
+bg_c.penup()
+bg_c.goto(-800,450)
+bg_c.pensize(100)
+bg_c.seth(0)
+
+#Track
+o_t = turtle.Turtle()
+o_t.penup()
+o_t.goto(-600,-400)
+o_t.pensize(10)
+o_t.shapesize(float(0.5))
+o_t.seth(0)
+
+o_t2 = turtle.Turtle()
+o_t2.penup()
+o_t2.goto(-600,400)
+o_t2.pensize(10)
+o_t2.shapesize(float(0.5))
+o_t2.seth(0)
+
+i_t = turtle.Turtle()
+i_t.penup()
+i_t.goto(400, -266)
+i_t.pensize(10)
+i_t.shapesize(float(0.5))
+i_t.seth(0)
+
+i_t2 = turtle.Turtle()
+i_t2.penup()
+i_t2.goto(400, -266)
+i_t2.pensize(10)
+i_t2.shapesize(float(0.5))
+i_t2.seth(0)
+i_t2.ht()
+
+s_L = turtle.Turtle()
+s_L.penup()
+s_L.goto(-600, -100)
+s_L.shapesize(float(0.5))
+s_L.pensize(5)
+s_L.seth(0)
+
+#Start Light
+s_Light = turtle.Turtle()
+s_Light.ht()
+s_Light.penup()
+s_Light.pensize(10)
+s_Light.goto(-480,-120)
+s_Light.seth(0)
+
+side_length1 = 100
+side_length2 = 40
+
+#PitLane
+pitL = turtle.Turtle()
+pitL.penup()
+pitL.pensize(8.5)
+pitL.goto(-500, 300)
+pitL.shapesize(float(0.5))
+pitL.seth(270)
+
+side_length_pit = 632
+side_length_pit2 = 170
+
+#Car setup
+car = Turtle()
+car.clear()
+car.penup()
+
+car.shape("turtle")
+car.color("cyan")
+car.position()
+car.goto(-430, -70)
+car.speed(0)
+car.setheading(270)
+
+#Timer setup
+laper = turtle.Turtle()
+laper.clear()
+laper.penup()
+
+laper.goto(300, 0)
+laper.ht()
+
+timerK = turtle.Turtle()
+timerK.penup()
+timerK.clear()
+timerK.ht()
+timerK.goto(200, -100)
+
+timerC = turtle.Turtle()
+timerC.penup()
+timerC.clear()
+timerC.ht()
+timerC.goto(600, 0)
+
+bLap = turtle.Turtle()
+bLap.penup()
+bLap.clear()
+bLap.ht()
+bLap.goto(400, -100)
+
+#Each Start Light
+light1 = Turtle()
+light1.ht()
+light1.clear()
+light1.penup()
+
+light2 = Turtle()
+light2.ht()
+light2.clear()
+light2.penup()
+
+light3 = Turtle()
+light3.ht()
+light3.clear()
+light3.penup()
+
+#Variables
+playing = True
+lap = 0
+passed = False
+k = 0
+start = False
+yes = False
+ln = 1
+gt = 250
+cTime = 0
+pColor = 'white'
+
+#Calling Functions
+bg_color(bg_c, 1200)
+OutterTrack(o_t, 1200)
+InnerTrack(i_t, 700, i_t2)
+startFinishLine(s_L, 350)
+pitLane(pitL, side_length_pit)
+
+draw_rect(s_Light, side_length1, side_length2)
+screen.tracer(1)
+time.sleep(1)
+startLights(light1, light2, light3)
+time.sleep(random.randint(1, 4))
+allGreen(light1, light2, light3)
+time.sleep(0.25)
+screen.bgcolor("grey")
+screen.tracer(0)
+
+while True:
+  screen.update()
+  if playing == True:
+      if CAR_SPEED >= 0:
+          CAR_SPEED = CAR_SPEED - 0.01
+      if CAR_SPEED < 0:
+          CAR_SPEED = 0
+      car.forward(CAR_SPEED)
+      outerBarriers(car)
+      hitWall(car)
+      lap_writer()
+      timeKeeper(car, timerK, bLap)
+      pitFunction(car)
+      ending()
